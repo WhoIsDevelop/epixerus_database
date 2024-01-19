@@ -1,2 +1,2 @@
-from epixerus_database.libs.lib_sqlite3.lib_sqlite3_v1 import LibSQLite3
+from epixerus_database.libs.lib_sqlite3 import LibSQLite3
 from epixerus_database.libs.lib_abc import AbstractBD

@@ -1,12 +1,15 @@
 import sqlite3
+import os
 
 from epixerus_database.libs.lib_abc import AbstractBD
 
-class LibSQLite3(AbstractBD):
+class LibSQLite3V1(AbstractBD):
 
 
     def __init__(self):
         super().__init__()
+        self._address = os.path.dirname(os.path.abspath(__file__)) + '/'
+        self._name = 'default'
         self._file_extension = '.db'
 
     @property
@@ -28,6 +31,7 @@ class LibSQLite3(AbstractBD):
             self._name = kwargs.get('name')
         if 'address' in kwargs:
             self._address = kwargs.get('address')
+
     def check(self, name=None):
         pass
 
