@@ -2,10 +2,12 @@ from abc import ABC, abstractmethod
 
 class AbstractBD(ABC):
     def __init__(self):
-        self.connection = None
+        self._connection = None
+        self._name = None
+        self._address = None
 
     @abstractmethod
-    def config(self, name, path=None, user=None, password=None, address=None, **kwargs):
+    def config(self, name=None, address=None, user=None, password=None, file_extension=None, **kwargs):
         pass
 
     @abstractmethod
@@ -16,7 +18,30 @@ class AbstractBD(ABC):
     def close(self):
         pass
 
-    #
-    # @abstractmethod
-    # def do_another_thing(self):
-    #     pass
+    @abstractmethod
+    def check(self):
+        pass
+
+    @abstractmethod
+    def database_create(self):
+        pass
+
+    @abstractmethod
+    def database_delete(self):
+        pass
+
+    @abstractmethod
+    def table_create(self, table_name):
+        pass
+
+    @abstractmethod
+    def table_delete(self, table_name):
+        pass
+
+    @abstractmethod
+    def table_select(self, table_name):
+        pass
+
+    @abstractmethod
+    def table_insert(self, table_name):
+        pass

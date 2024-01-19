@@ -11,36 +11,9 @@ class EpixerusDataBase:
         self.lib: AbstractBD = lib.value()
 
     def __enter__(self):
-        self.connect()
+        self.lib.connect()
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        self.close()
+        self.lib.close()
 
-    def connect(self):
-        self.lib.connect()
-
-    def close(self):
-        if self.lib.connection:
-            self.lib.connection.close()
-
-    def check(self, name=None):
-        pass
-
-    def database_create(self):
-        pass
-
-    def database_delete(self):
-        pass
-
-    def table_create(self, name=None):
-        pass
-
-    def table_delete(self, name=None):
-        pass
-
-    def table_select(self, name=None):
-        pass
-
-    def table_insert(self):
-        pass

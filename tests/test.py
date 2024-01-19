@@ -3,4 +3,5 @@ from epixerus_database import EpixerusDataBase
 
 db = EpixerusDataBase(EpixerusDataBase.LIBS.SQLite3)
 db.lib.config(name='a')
-x = 2
+with db:
+    x = db.lib.table_create('text')
