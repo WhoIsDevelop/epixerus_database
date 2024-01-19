@@ -1,4 +1,6 @@
 
 from epixerus_database import EpixerusDataBase
 
-db = EpixerusDataBase(EpixerusDataBase.LibSelector.SQLite3, 'new')
+db = EpixerusDataBase(EpixerusDataBase.LIBS.SQLite3)
+db.lib.config(name='a')
+x = 2
