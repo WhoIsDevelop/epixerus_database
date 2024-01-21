@@ -43,7 +43,9 @@ class AbstractTable(ABC):
     def __init__(self,parent, table_name):
         self.table_name = table_name
         self.parent=parent
-
+    @abstractmethod
+    def row_exist(self, values):
+        pass
     @abstractmethod
     def check(self):
         pass

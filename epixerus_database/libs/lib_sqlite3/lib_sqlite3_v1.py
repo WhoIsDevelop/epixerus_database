@@ -94,12 +94,21 @@ class TableSQLite3(AbstractTable):
         self.parent._connection.commit()
 
     def insert_not_exist(self, values):
-        values = (None, *values)
-        cursor = self.parent._connection.cursor()
-        insert_query = f"INSERT OR IGNORE INTO {self.table_name} VALUES ({', '.join(['?' for _ in values])})"
+        if not self.row_exist(values):
+            values = (None, *values)
+            cursor = self.parent._connection.cursor()
+            insert_query = f"INSERT OR IGNORE INTO {self.table_name} VALUES ({', '.join(['?' for _ in values])})"
 
-        cursor.execute(insert_query, values)
-        self.parent._connection.commit()
+            cursor.execute(insert_query, values)
+            self.parent._connection.commit()
 
     def __init__(self, parent, table_name):
         super().__init__(parent, table_name)
+
+    def row_exist(self, values):
+        placeholders = ', '.join(['?'] * len(values))
+        select_query = f'''
+            SELECT * FROM {self.table_name} WHERE {placeholders}
+        '''
+        result = self.parent._connection.execute(select_query, values)
+        return result.fetchone() is not None
