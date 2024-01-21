@@ -86,6 +86,7 @@ class TableSQLite3(AbstractTable):
         pass
 
     def insert(self, values):
+        values = (None, *values)
         cursor = self.parent._connection.cursor()
         insert_query = f"INSERT INTO {self.table_name} VALUES ({', '.join(['?' for _ in values])})"
 
