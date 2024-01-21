@@ -111,6 +111,5 @@ class TableSQLite3(AbstractTable):
             SELECT * FROM {self.table_name} WHERE ({placeholders})
         '''
         cursor = self.parent._connection.cursor()
-        cursor.execute(select_query, values)
-        result = self.parent._connection.commit()
+        result=cursor.execute(select_query, values)
         return result.fetchone() is not None
