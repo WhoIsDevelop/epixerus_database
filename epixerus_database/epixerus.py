@@ -17,3 +17,5 @@ class EpixerusDataBase:
     def __exit__(self, exc_type, exc_value, traceback):
         self.lib.close()
 
+    def __getattr__(self, attr):
+        return getattr(self.lib, attr)
