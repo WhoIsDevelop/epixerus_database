@@ -108,7 +108,7 @@ class TableSQLite3(AbstractTable):
     def row_exist(self, values):
         placeholders = ', '.join(['?'] * len(values))
         select_query = f'''
-            SELECT * FROM {self.table_name} WHERE {placeholders}
+            SELECT * FROM {self.table_name} WHERE ({placeholders})
         '''
         cursor = self.parent._connection.cursor()
         cursor.execute(select_query, values)
