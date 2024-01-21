@@ -93,9 +93,9 @@ class TableSQLite3(AbstractTable):
         cursor.execute(insert_query, values)
         self.parent._connection.commit()
 
-    def insert_not_exist(self, values):
-        values = (None, *values)
-        if not self.row_exist(values):
+    def insert_not_exist(self, values, column_names):
+        if not self.row_exist(values, column_names):
+            values = (None, *values)
             cursor = self.parent._connection.cursor()
             insert_query = f"INSERT OR IGNORE INTO {self.table_name} VALUES ({', '.join(['?' for _ in values])})"
 
@@ -105,8 +105,8 @@ class TableSQLite3(AbstractTable):
     def __init__(self, parent, table_name):
         super().__init__(parent, table_name)
 
-    def row_exist(self, values):
-        placeholders = ', '.join(['?'] * len(values))
+    def row_exist(self, values, column_names):
+        placeholders = ' AND '.join([f'{name} = ?' for name in column_names])
         select_query = f'''
             SELECT * FROM {self.table_name} WHERE ({placeholders})
         '''

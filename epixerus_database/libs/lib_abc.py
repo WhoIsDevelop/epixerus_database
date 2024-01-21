@@ -44,7 +44,7 @@ class AbstractTable(ABC):
         self.table_name = table_name
         self.parent=parent
     @abstractmethod
-    def row_exist(self, values):
+    def row_exist(self, values, column_names):
         pass
     @abstractmethod
     def check(self):
@@ -67,7 +67,7 @@ class AbstractTable(ABC):
         pass
 
     @abstractmethod
-    def insert_not_exist(self, values):
+    def insert_not_exist(self, values, column_names):
         pass
 
     @abstractmethod
