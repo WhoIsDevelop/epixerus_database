@@ -1,10 +1,16 @@
 import sqlite3
 import os
 
-from epixerus_database.libs.lib_abc import AbstractBD
+from epixerus_database.libs.lib_abc import AbstractBD, AbstractTable
 
 class LibSQLite3V1(AbstractBD):
 
+
+    def table(self, table_name):
+        return TableSQLite3(table_name)
+
+    def clear(self):
+        pass
 
     def __init__(self):
         super().__init__()
@@ -15,6 +21,9 @@ class LibSQLite3V1(AbstractBD):
     @property
     def database_path(self):
         return self._address + self._name + self._file_extension
+
+
+
 
     def close(self):
         if self._connection:
@@ -32,23 +41,36 @@ class LibSQLite3V1(AbstractBD):
         if 'address' in kwargs:
             self._address = kwargs.get('address')
 
-    def check(self, name=None):
+    def check(self):
+        self.connect()
+        self.close()
+
+    def create(self):
         pass
 
-    def database_create(self):
+    def delete(self):
         pass
 
-    def database_delete(self):
+
+class TableSQLite3(AbstractTable):
+
+    def custom(self):
         pass
 
-    def table_create(self, table_name):
+    def clear(self):
         pass
 
-    def table_delete(self, table_name):
+    def create(self):
         pass
 
-    def table_select(self, table_name):
+    def delete(self):
         pass
 
-    def table_insert(self, table_name):
+    def select(self):
         pass
+
+    def insert(self):
+        pass
+
+    def __init__(self, table_name):
+        super().__init__(table_name)

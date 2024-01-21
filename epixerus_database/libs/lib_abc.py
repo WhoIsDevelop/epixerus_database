@@ -7,6 +7,10 @@ class AbstractBD(ABC):
         self._address = None
 
     @abstractmethod
+    def table(self, table_name):
+        return AbstractTable(table_name)
+
+    @abstractmethod
     def config(self, name=None, address=None, user=None, password=None, file_extension=None, **kwargs):
         pass
 
@@ -23,25 +27,60 @@ class AbstractBD(ABC):
         pass
 
     @abstractmethod
-    def database_create(self):
+    def create(self):
         pass
 
     @abstractmethod
-    def database_delete(self):
+    def delete(self):
         pass
 
     @abstractmethod
-    def table_create(self, table_name):
+    def clear(self):
+        pass
+
+class AbstractTable(ABC):
+
+    def __init__(self, table_name):
+        self.table_name = table_name
+
+    @abstractmethod
+    def create(self):
         pass
 
     @abstractmethod
-    def table_delete(self, table_name):
+    def delete(self):
         pass
 
     @abstractmethod
-    def table_select(self, table_name):
+    def select(self):
         pass
 
     @abstractmethod
-    def table_insert(self, table_name):
+    def insert(self):
+        pass
+
+    @abstractmethod
+    def clear(self):
+        pass
+
+    @abstractmethod
+    def custom(self):
+        pass
+
+
+class AbstractView(ABC):
+
+    def __init__(self, view_name):
+        self.view_name = view_name
+
+    @abstractmethod
+    def create(self):
+        pass
+
+    @abstractmethod
+    def delete(self):
+        pass
+
+    @abstractmethod
+    def select(self):
         pass
