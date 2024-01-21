@@ -65,6 +65,10 @@ class AbstractTable(ABC):
         pass
 
     @abstractmethod
+    def insert_not_exist(self, values):
+        pass
+
+    @abstractmethod
     def clear(self):
         pass
 
