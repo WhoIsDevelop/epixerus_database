@@ -110,5 +110,7 @@ class TableSQLite3(AbstractTable):
         select_query = f'''
             SELECT * FROM {self.table_name} WHERE {placeholders}
         '''
-        result = self.parent._connection.execute(select_query, values)
+        cursor = self.parent._connection.cursor()
+        cursor.execute(select_query, values)
+        result = self.parent._connection.commit()
         return result.fetchone() is not None
