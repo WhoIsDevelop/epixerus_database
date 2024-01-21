@@ -8,7 +8,7 @@ class AbstractBD(ABC):
 
     @abstractmethod
     def table(self, table_name):
-        return AbstractTable(table_name)
+        return AbstractTable(self,table_name)
 
     @abstractmethod
     def config(self, name=None, address=None, user=None, password=None, file_extension=None, **kwargs):
@@ -40,11 +40,16 @@ class AbstractBD(ABC):
 
 class AbstractTable(ABC):
 
-    def __init__(self, table_name):
+    def __init__(self,parent, table_name):
         self.table_name = table_name
+        self.parent=parent
 
     @abstractmethod
-    def create(self):
+    def check(self):
+        pass
+
+    @abstractmethod
+    def create(self, table_dictionary):
         pass
 
     @abstractmethod
@@ -70,8 +75,14 @@ class AbstractTable(ABC):
 
 class AbstractView(ABC):
 
-    def __init__(self, view_name):
+    def __init__(self,parent, view_name):
         self.view_name = view_name
+        self.parent = parent
+
+    @abstractmethod
+    def check(self):
+        pass
+
 
     @abstractmethod
     def create(self):

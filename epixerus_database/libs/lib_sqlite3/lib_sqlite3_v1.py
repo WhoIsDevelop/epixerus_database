@@ -7,7 +7,7 @@ class LibSQLite3V1(AbstractBD):
 
 
     def table(self, table_name):
-        return TableSQLite3(table_name)
+        return TableSQLite3(self,table_name)
 
     def clear(self):
         pass
@@ -54,14 +54,30 @@ class LibSQLite3V1(AbstractBD):
 
 class TableSQLite3(AbstractTable):
 
+    def check(self):
+        cursor = self.parent._connection.cursor()
+        cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{self.table_name}'")
+        result = cursor.fetchone()
+        if result:
+            return True
+        else:
+            return False
+
     def custom(self):
         pass
 
     def clear(self):
         pass
 
-    def create(self):
-        pass
+    def create(self, table_params):
+        cursor = self.parent._connection.cursor()
+
+        create_table_query = f'''
+        CREATE TABLE IF NOT EXISTS {self.table_name} {table_params}
+        '''
+        cursor.execute(create_table_query)
+
+        self.parent._connection.commit()
 
     def delete(self):
         pass
@@ -72,5 +88,5 @@ class TableSQLite3(AbstractTable):
     def insert(self):
         pass
 
-    def __init__(self, table_name):
-        super().__init__(table_name)
+    def __init__(self, parent, table_name):
+        super().__init__(parent, table_name)
