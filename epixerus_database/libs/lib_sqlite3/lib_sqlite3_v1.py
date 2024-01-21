@@ -94,8 +94,8 @@ class TableSQLite3(AbstractTable):
         self.parent._connection.commit()
 
     def insert_not_exist(self, values):
+        values = (None, *values)
         if not self.row_exist(values):
-            values = (None, *values)
             cursor = self.parent._connection.cursor()
             insert_query = f"INSERT OR IGNORE INTO {self.table_name} VALUES ({', '.join(['?' for _ in values])})"
 
