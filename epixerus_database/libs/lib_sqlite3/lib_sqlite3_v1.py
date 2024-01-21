@@ -85,8 +85,12 @@ class TableSQLite3(AbstractTable):
     def select(self):
         pass
 
-    def insert(self):
-        pass
+    def insert(self, values):
+        cursor = self.parent._connection.cursor()
+        insert_query = f"INSERT INTO {self.table_name} VALUES ({', '.join(['?' for _ in values])})"
+
+        cursor.execute(insert_query, values)
+        self.parent._connection.commit()
 
     def __init__(self, parent, table_name):
         super().__init__(parent, table_name)

@@ -61,7 +61,7 @@ class AbstractTable(ABC):
         pass
 
     @abstractmethod
-    def insert(self):
+    def insert(self, values):
         pass
 
     @abstractmethod
